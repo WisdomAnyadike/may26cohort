@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+
+    let myString = 'goodlLivingGod'
+
+   console.log( myString.length);
+
+  let newString = myString.toLowerCase()
+
+  console.log(myString);
+
+
+ let createdString =  myString.substr( 5  )
+ let anotherCreatedString = myString.slice(5 )
+ console.log(createdString);
+console.log(anotherCreatedString);
+
+ console.log(myString);
+// split 
+
+console.log(myString.split('j'));
+
+//trim
+
+let inputValue = '  wisdom anya'
+
+console.log(inputValue.length);
+
+inputValue = inputValue.trim()
+
+console.log(inputValue.length);
+
+
+
+let theString = 'my name is david'
+console.log(theString.includes('my name is david'));
+
+
+let thisString = '30 days of javascript javascript'
+// let arr = thisString.split(' ')
+// console.log(arr);
+
+// arr[4] = 'python'
+// console.log(arr);
+
+// let latestString = arr.join(' ')
+// console.log(latestString);
+
+
+let replacedString = thisString.replaceAll('javascript' , 'python').replace('of' , 'with')
+console.log(replacedString);
+
+
+let classWorkString = 'do yoU  nEed to eat' // do you need to eat
+classWorkString = classWorkString.replace('U  nE' , 'u ne')
+console.log(classWorkString);
+
+
+
+
+
+
+
+    
+</script>
