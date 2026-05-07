@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="text" id="inputTag" > <button onclick="moveValue()"> click </button>
+
+ <p id="ptag">
+        
+
+
+        
+    </p>
+
+    <!-- <div id="divtag">
+        
+
+
+
+
+
+    </div> -->
+
+   
+    
+</body>
+</html>
+<script>
+    let inputElement = document.getElementById('inputTag')
+    let paragraphTag = document.getElementById('ptag')
+    console.log(paragraphTag);
+
+    //  let container = document.getElementById('divtag')
+    // console.log(container);
+    
+
+    // let pValue = 'hey class'
+    // let divValue = 'well done on you first CA'
+
+    // paragraphTag.innerHTML = pValue
+    // container.innerHTML = divValue
+
+
+    
+
+    function moveValue() {
+        let valueUserTyped = inputElement.value
+
+        paragraphTag.innerHTML = valueUserTyped
+
+
+        
+    }
+
+
+
+</script>
