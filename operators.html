@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+.notwow{
+    background-color: crimson;
+
+}
+
+
+    </style>
+</head>
+<body id="theBody">
+<button onclick="changeBackground()"> click here </button>
+<p class="wow" id="ptag"  > hey </p>
+
+<div id="preview">
+    <img id="image">
+</div>
+    
+</body>
+</html>
+<script>
+
+    let hisName = 'david'
+    console.log(hisName);
+hisName = 'daniel'
+
+
+
+
+    let number = 60
+number = number + 45
+    number += 45
+    console.log(number);
+
+    number -= 45
+    number += 3
+    number = 56
+
+
+    
+    console.log(number);
+    
+
+    let value = 5
+    value *= 3
+    value -= 3 
+     value -=4
+     value = 20 * 5
+       console.log(value);
+    
+       // comparism operators
+
+      let num1 = 4
+      let num2 = '4'
+      
+      console.log(num1 == num2);
+       console.log(num1 !== num2);
+
+       let isSqiLightOn = false
+
+       
+ console.log(2 >= 4);
+
+ 56 <= 67
+ 
+
+       if ('') {
+        console.log('start the class');
+       }
+let image = document.getElementById('image')
+
+
+
+function changeBackground(params) {
+let preview = document.getElementById('preview')
+    let container = document.getElementById('theBody')
+
+    if (container.style.backgroundColor === '') {
+    container.style.backgroundColor = 'black'
+    }else {
+      container.style.backgroundColor = ''  
+    }
+
+   
+}
+
+let paragraph = document.getElementById('ptag')
+paragraph.className = 'notwow'
+
+
+image.alt = 'tiger'
+image.src = 'https://cdn.pixabay.com/photo/2017/07/24/19/57/tiger-2535888_640.jpg'
+image.style.borderRadius = '50%'
+
+
+let num = 20
+
+if (num === 5) {
+     console.log('num is fiveeee!');     
+}else {
+    console.log('num is not 5!');
+    
+}
+
+
+
+
+</script>

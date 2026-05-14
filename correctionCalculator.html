@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<input type="number" id="input1">   <input type="number" id="input2"> 
+<button onclick="add()"> + </button>
+<button> * </button>
+<button> - </button>
+<button> / </button>
+<button> %</button>
+<button> ** </button>
+
+<p id="output">     </p>
+
+    
+</body>
+</html>
+<script>
+
+let first = document.getElementById('input1')
+let second = document.getElementById('input2')
+let third = document.getElementById('output')
+function add() {
+    let firstValue = first.value 
+    let secondValue = second.value
+    console.log(firstValue, secondValue);
+    firstValue = Number(firstValue)
+    secondValue = Number(secondValue)
+    let total = firstValue + secondValue
+    third.innerHTML= total 
+    
+    
+    //  let total = Number(first.value) + Number(second.value)
+    // third.innerHTML= total  
+
+
+}
+
+
+</script>

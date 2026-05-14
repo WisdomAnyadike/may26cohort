@@ -6,6 +6,9 @@
     <title>Document</title>
 </head>
 <body>
+
+    <p> i am a        boy </p>
+    <pre> i am a        boy </pre>
     
 </body>
 </html>
@@ -65,6 +68,21 @@ let classWorkString = 'do yoU  nEed to eat' // do you need to eat
 classWorkString = classWorkString.replace('U  nE' , 'u ne')
 console.log(classWorkString);
 
+// i am a boy , i am 25 years old
+let firstString = 'i am'
+let secondString = 'a boy'
+let thirdString = ' '
+let formerAge = 20
+let addedYears = 5
+let forthString = 'years old.'
+let fifthString = ','
+// let total = formerAge + addedYears
+
+let mySentence = firstString + thirdString + secondString + fifthString + thirdString + firstString  + thirdString + (formerAge + addedYears) + thirdString + forthString
+let sentence2 = `${firstString} ${secondString} , ${firstString} ${formerAge + addedYears} ${forthString}`
+
+console.log(mySentence);
+console.log(sentence2);
 
 
 
