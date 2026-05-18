@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="text" id="numberInput"> <button onclick="checkAge()"> click </button>
+    <p id="output"> </p>
+    
+</body>
+</html>
+<script>
+    // you dont want emptyString
+    // you dont want empty spaces
+     // you dont want values that are not number
+    // you dont want 0
+    // you dont want decimals
+   
+
+   let inputElement = document.getElementById('numberInput')
+   //DRY
+
+    function checkAge(params) {
+   let pTag = document.getElementById('output')
+   let value = inputElement.value
+   let age = value.trim() // '56.9'
+   let num = Number(age)
+
+        if ( age === '') {
+           alert('input is mandatory') 
+             pTag.innerHTML = ''
+        } else if (isNaN(age)) {
+           alert('value must be a number')
+             pTag.innerHTML = ''
+        } else if ( num <= 0 ){
+            alert('value must be greater than 0')
+              pTag.innerHTML = ''
+        } else if ( !Number.isInteger(num)) {
+             alert('value must be a whole number')
+              pTag.innerHTML = ''
+        }  else {
+        
+            if (num < 18) {
+               let agesDiff = 18 - num
+               pTag.innerHTML = `You are left with ${agesDiff}years to drive`
+            }else {
+                 pTag.innerHTML = `You are old enough to drive`
+            }
+
+
+        }
+        
+    }
+
+
+
+  isNaN('56')
+
+
+console.log(parseInt('45.7'));
+
+
+
+</script>
