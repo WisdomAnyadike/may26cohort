@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <button onclick="run()"> click </button>
+    
+
+
+
+</body>
+</html>
+<script>
+    //1st class citizens in javascript
+    
+
+// function declaration
+function run(params) {
+    console.log('i am running');
+    
+}
+
+
+// 1. functions can be given a variable name
+
+// function expression
+let jump = function (params) {
+    alert('hey class')
+}
+
+
+jump()
+
+// 2. function can take parameters and arguments
+
+function addTwoNumbers(num1 , num2) {
+     console.log(num1 + num2)
+}
+
+
+addTwoNumbers(34 , 56 )
+addTwoNumbers(100 , 56 )
+
+// 3. return a function from another function
+
+function skip(){
+let a = 0
+let b = 0
+    let total = a + b
+    console.log(total);
+
+    if (total) {
+        return 'hello'
+    }else {
+        return 'wow'
+    }
+    
+}
+skip() 
+
+let value = skip() + 10
+console.log(value);
+
+
+
+
+function mulitiplyBy5() {
+
+    return function theMuliplier(x) {
+         return function theMuliplier2() {
+         return x * 5
+    }
+    }
+
+   
+    
+}
+
+
+console.log(mulitiplyBy5()(5)());
+
+console.log(mulitiplyBy5()(40)());
+
+
+
+// rgb(2,56,21)
+
+    
+</script>

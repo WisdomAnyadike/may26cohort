@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="text" id="todo"> <button onclick="addTodo()"> add todo </button>
+    <div id="preview">
+  
+
+
+    </div>
+    
+</body>
+</html>
+<script>
+    let todo = document.getElementById('todo')
+    let previewDiv = document.getElementById('preview')
+    let todoDatabase = []
+
+    
+function addTodo() {
+   let todoValue =  todo.value.trim()
+    if (todoValue === '') {
+        alert('please provide a todo')
+    }else {
+      todoDatabase.push(todoValue)
+      displayTodos()
+    }   
+}
+
+
+function editTodo(i) {
+    const promptValue = prompt('Enter edit value here' ,  todoDatabase[i])
+    if (promptValue === null ) {
+    }else if (promptValue.trim() === ''){
+        alert('please enter a value')
+    } else if ( promptValue.trim() === todoDatabase[i] ) {
+       alert('please edit with a different value')
+    } else {
+     todoDatabase[i] = promptValue.trim()
+    // todoDatabase.splice( i , 1 , promptValue.trim() )
+    displayTodos()
+    } 
+}
+
+
+function displayTodos (){
+     previewDiv.innerHTML = ''
+     for (let index = 0; index < todoDatabase.length; index++) {
+       previewDiv.innerHTML += `<p> ${todoDatabase[index]} <button onclick="editTodo(${index})"> edit </button> <button> delete </button> </p>` 
+     }
+}
+
+
+
+// let arr = [1,2,3, 4,5]
+
+// console.log(arr.splice(0 , 0 , 5 , 6,7,34));
+
+
+// console.log(arr);
+
+
+// DRY
+
+</script>

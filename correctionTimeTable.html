@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="start"> <input type="text" id="end"> <button onclick="generate()"> generate table </button>
+    
+
+<div id="preview">
+
+
+
+
+</div>
+
+
+
+</body>
+</html>
+<script>
+    let startInput = document.getElementById('start')
+    let endInput = document.getElementById('end')
+    let previewDiv = document.getElementById('preview')
+
+    function generate(params) {
+        let startVal = startInput.value.trim()
+        let endVal = endInput.value.trim()
+
+        if (!startVal || !endVal ) {
+            alert('All fields are mandatory')
+        } else if ( isNaN(startVal) || isNaN(endVal)){
+             alert('Value must be a number')
+        }else if ( +startVal > +endVal){
+              alert('Start number must be less than or equal to end number')
+        } else if ( (+endVal - +startVal) > 50 ){
+              alert('system overload , please try a smaller difference')
+        }      
+        else {
+               previewDiv.innerHTML  = ''
+            for (let i = Number(startVal) ; i <= Number(endVal) ; i++) {
+               
+                 for (let index = 1; index < 14; index++) {
+               previewDiv.innerHTML +=  `<p> ${i} * ${index}  = ${ i * index } </p>`       
+            }
+
+            previewDiv.innerHTML += `<br> <br/>`
+                
+            }
+
+           
+
+
+        }
+
+
+        
+    }
+
+
+
+
+
+</script>

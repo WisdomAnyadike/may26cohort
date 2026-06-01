@@ -7,12 +7,11 @@
 </head>
 <body>
 <input type="number" id="input1">   <input type="number" id="input2"> 
-<button onclick="add()"> + </button>
-<button> * </button>
-<button> - </button>
-<button> / </button>
-<button> %</button>
-<button> ** </button>
+<button onclick="calculate('+')"> + </button>
+<button onclick="calculate('*')" > * </button>
+<button onclick="calculate('-')" > - </button>
+<button onclick="calculate('/')" > / </button>
+
 
 <p id="output">     </p>
 
@@ -24,21 +23,73 @@
 let first = document.getElementById('input1')
 let second = document.getElementById('input2')
 let third = document.getElementById('output')
-function add() {
-    let firstValue = first.value 
-    let secondValue = second.value
+
+// function add() {
+//     let firstValue = first.value.trim() 
+//     let secondValue = second.value.trim()
+//     console.log(firstValue, secondValue);
+//     firstValue = Number(firstValue)
+//     secondValue = Number(secondValue)
+//     let total = firstValue + secondValue
+//     third.innerHTML= total 
+// }
+
+
+// function multiply() {
+//     let firstValue = first.value.trim() 
+//     let secondValue = second.value.trim()
+//     console.log(firstValue, secondValue);
+//     firstValue = Number(firstValue)
+//     secondValue = Number(secondValue)
+//     let total = firstValue * secondValue
+//     third.innerHTML= total 
+// }
+
+
+// function subtract() {
+//     let firstValue = first.value.trim() 
+//     let secondValue = second.value.trim()
+//     console.log(firstValue, secondValue);
+//     firstValue = Number(firstValue)
+//     secondValue = Number(secondValue)
+//     let total = firstValue - secondValue
+//     third.innerHTML= total 
+// }
+
+// function divide() {
+//     let firstValue = first.value.trim() 
+//     let secondValue = second.value.trim()
+//     console.log(firstValue, secondValue);
+//     firstValue = Number(firstValue)
+//     secondValue = Number(secondValue)
+//     let total = firstValue / secondValue
+//     third.innerHTML= total 
+// }
+
+
+function calculate(sym) {
+    let firstValue = first.value.trim() 
+    let secondValue = second.value.trim()
     console.log(firstValue, secondValue);
     firstValue = Number(firstValue)
     secondValue = Number(secondValue)
-    let total = firstValue + secondValue
-    third.innerHTML= total 
-    
-    
-    //  let total = Number(first.value) + Number(second.value)
-    // third.innerHTML= total  
+     let total
 
-
+    if (sym === '+') {
+     total = firstValue + secondValue  
+  
+    }else if (sym === '*'){
+      total = firstValue * secondValue  
+       
+    } else if (sym === '-'){
+         total = firstValue - secondValue  
+  
+    }else {
+         total = firstValue / secondValue  
+         
+    }
+   third.innerHTML= total
+     
 }
-
 
 </script>
