@@ -47,7 +47,7 @@
     </section>
 
      <div>
-                <h1>Balance: <span id="bal"></span></h1>
+                <h1>Balance: <span id="bal"> </span></h1>
             </div>
 
 
@@ -70,16 +70,71 @@
 </body>
 </html>
 <script>
+let cardPin = document.getElementById('myPin')
+let cardProvider = document.getElementById('provider')
+let cardAmount = document.getElementById('amount')
+let balSpan = document.getElementById('bal')
+let providerValue = ''
+let amountValue = ''
+let balance = 0 
 
-    let cardDatabase = []
+balSpan.innerHTML = balance
 
 
 function genAirtime() {
+    providerValue = cardProvider.value
+    amountValue =cardAmount.value
+    if (providerValue === '') {
+        alert('Kindly choose valid provider')
+    } else if (amountValue === '') {
+        alert('Choose a valid amount')
+    } else{
+    let pin = ""
+    for(let i = 0; i < 12; i++){
+    pin +=Math.floor(Math.random() *10)
+    }   
+
+     cardPin.innerHTML = pin
 
 
 
+    }
 
 }
+
+function loadAirtime() {
+    let inputElement = document.getElementById('loadInput').value
+    console.log(inputElement.startsWith('*311*'));
+    
+//    correct text = *311*123456789012# 
+// let pattern = /^\*311*d\{12}$#/
+
+if (!cardPin.innerHTML.trim()) {
+    alert('please generate pin')
+    return
+}
+
+
+if (!inputElement.startsWith('*311*') || !inputElement.endsWith('#') || inputElement.trim().length !== 18) {
+    alert('invalid loading format')
+} else if (inputElement !== `*311*${cardPin.innerHTML.trim()}#`) {
+     alert('invalid card')
+}else {
+    alert (`you have successfully loaded ${providerValue} of ${amountValue} successfully`)
+     balance = balance + Number(amountValue) 
+     balSpan.innerHTML = balance    
+}
+
+
+
+    
+}
+
+
+
+  
+
+
 
 
 

@@ -28,6 +28,7 @@ function addTodo() {
         alert('please provide a todo')
     }else {
       todoDatabase.push(todoValue)
+      todo.value = ''
       displayTodos()
     }   
 }
@@ -51,10 +52,21 @@ function editTodo(i) {
 function displayTodos (){
      previewDiv.innerHTML = ''
      for (let index = 0; index < todoDatabase.length; index++) {
-       previewDiv.innerHTML += `<p> ${todoDatabase[index]} <button onclick="editTodo(${index})"> edit </button> <button> delete </button> </p>` 
+       previewDiv.innerHTML += `<p> ${todoDatabase[index]} <button onclick="editTodo(${index})"> edit </button> <button onclick="deleteTodo(${index})"> delete </button> </p>` 
      }
 }
 
+
+function deleteTodo(i) {
+    let canDelete = confirm('are you sure')
+    if (canDelete) {
+    todoDatabase.splice(i, 1)
+    displayTodos()
+    }
+  
+
+    
+}
 
 
 // let arr = [1,2,3, 4,5]
