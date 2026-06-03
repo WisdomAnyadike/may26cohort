@@ -114,7 +114,6 @@ if (!cardPin.innerHTML.trim()) {
     return
 }
 
-
 if (!inputElement.startsWith('*311*') || !inputElement.endsWith('#') || inputElement.trim().length !== 18) {
     alert('invalid loading format')
 } else if (inputElement !== `*311*${cardPin.innerHTML.trim()}#`) {
@@ -124,8 +123,6 @@ if (!inputElement.startsWith('*311*') || !inputElement.endsWith('#') || inputEle
      balance = balance + Number(amountValue) 
      balSpan.innerHTML = balance    
 }
-
-
 
     
 }
