@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="carousel.css">
+</head>
+<body>
+    <main>
+        <img src="https://edu.sqi.ng/wp-content/uploads/2019/01/co.jpg" alt="SQI Logo">
+
+        <h2>SQI COLLEGE OF ICT</h2>
+        <span>IBADAN</span>
+
+        <p>STUDENT</p>
+
+        <div class="profile" id="profileData">
+
+            <img id="avatar"
+                src=""
+                alt="Student Photo">
+
+            <h1 id="name"></h1>
+
+            <p id="course"></p>
+
+            <div class="student-id" >
+                <span>Student ID |</span>
+                <h3 id="studentId"></h3>
+            </div>
+        </div>
+        </div>
+        <footer>
+            <a href="https://sqi.edu.ng">sqi.edu.ng</a>
+        </footer>
+
+    </main>
+    <button onclick="prevBttn()">Prev</button>
+    <button onclick="nextBttn()">Next</button>
+    
+</body>
+</html>
+<script>
+
+  let users = [
+       {
+            avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzR0bIMZ71HVeR5zF4PihQaDvTQQk6bsVERw&s',
+            Name: 'Odebiyi Abdulmalik Taiwo',
+            course: 'SOFTWARE ENGINEERING',
+            studentId: 2528886
+
+        } ,
+        {
+            avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTryy075oO8bGh-vaMG_RmgpaUyx8N9fC-x0Q&s',
+            Name: 'Ayoola Rhoda Ibukun',
+            course: 'CYBERSECURITY',
+            studentId: 34245462
+
+        },
+        {
+            avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnTo_ft7Ncj9n9Y_eyLvApxNIST5au_pXhgnf5oYQWyw&s',
+            Name: 'Kolawole Festus ',
+            course: 'AI AUTOMATION',
+            studentId: 2275643
+
+        },
+        {
+            avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpgHWSJ_0YTfdtpO6zZD_4MdWzaNHs8obMc74-4g-S1A&s',
+            Name: 'Eze Micheal ',
+            course: 'UI/UX',
+            studentId: 2123456
+
+        },
+
+    ]
+    let image = document.getElementById('avatar')
+    let name = document.getElementById('name')
+    let course = document.getElementById('course')
+    let id = document.getElementById('studentId')
+    let currentIndex = 0
+    function displayUsers() {
+        let student = users[currentIndex]
+        image.src = student.avatar
+        name.innerHTML = student['Name']
+        course.innerHTML = student['course']
+        id.innerHTML = student['studentId']
+    }
+    displayUsers()
+
+    function prevBttn() {
+
+        if (currentIndex === 0) {
+            currentIndex = users.length - 1
+        }else {
+         currentIndex --
+        }
+
+      displayUsers()
+        
+    }
+    function nextBttn() {
+        
+        if (currentIndex === users.length-1) {
+            currentIndex = 0
+        }else{
+            currentIndex++;
+        }
+        displayUsers()
+    }
+
+
+
+
+
+
+
+
+</script>
