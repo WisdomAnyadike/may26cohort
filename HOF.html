@@ -11,8 +11,62 @@
 </html>
 <script>
 
+// forEach Map find findIndex filter some every reduce  : array methods , loops , functions
 
 
+let fruits = ['watermelon' , 'pineapple' , 'mango' , 'guava' , 'tomato' , 'mango']
 
-    
+fruits.forEach(  () => { } )
+
+// for
+for (let index = 0; index < fruits.length; index++) {
+  fruits[index]  
+}
+
+
+// forEach
+let finalText = ''
+let one = fruits.forEach( ( y  , i  ) => {
+    finalText += ' ' + 'watermelon'
+  return 5
+})
+
+console.log(finalText);
+
+let funtion1 = fruits.map(function (fruit , index , arr) {
+    return index
+})
+console.log(funtion1);
+
+
+let numbers = [ 1 ,2 , 3 ,4 ,5 ]
+
+let newArr = numbers.map( function ( number , i ) {
+    return number * 2
+})
+console.log(newArr);
+
+//find
+
+let foundFruitIndex = fruits.findIndex(( fruit , i)=> {
+     return fruit === 'mango'
+})
+
+console.log(foundFruitIndex);
+let mangos = []
+fruits.forEach((fruit , i)=> {
+     if (fruit === 'mango') {
+        mangos.push(fruit)
+     }
+})
+
+console.log(mangos);
+
+// filter
+
+let evenNumbers = numbers.filter(( number , i)=> {
+         return number % 2 === 0
+})
+console.log(evenNumbers);
+
 </script>
