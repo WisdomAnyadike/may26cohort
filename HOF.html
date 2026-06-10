@@ -69,4 +69,73 @@ let evenNumbers = numbers.filter(( number , i)=> {
 })
 console.log(evenNumbers);
 
+
+
+let animals = ['rat' , 'dog' , 'cat' , 'fish']
+let foundAnimal = animals.find((animal , i)=> {
+ return 5
+})
+
+console.log(foundAnimal);
+
+let countries = [
+    'Nigeria', 'Ghana', 'Kenya', 'Egypt', 'South Africa',
+    'Brazil', 'Argentina', 'Mexico', 'Canada', 'United States',
+    'Germany', 'France', 'Italy', '78', 'Spain', 'United Kingdom',
+    'Japan', 'China', 'India', 'Australia', 'South Korea',
+    'Russia', 'Turkey', 'Saudi Arabia', 'Morocco', 'Colombia' 
+]
+
+
+
+
+// Declare a getLastTenCountries function 
+// which returns the last ten countries in 
+// the countries array. hint: Use filter
+
+// code skeleton
+
+let lastTenCountries = countries.filter(( country , i )=> { return i >= (countries.length - 10)  })
+console.log(lastTenCountries);
+
+
+console.log(countries);
+
+let doesAtLeastOneCountryStartWithM =  countries.some((country, i)=> {
+  
+    return  typeof country ==="string" ? country[0].toLowerCase() === 'm'  : false
+
+})
+
+
+
+console.log(doesAtLeastOneCountryStartWithM);
+
+
+let isEveryValueAString = countries.every(( country , i )=> {
+   return  isNaN(country)
+})
+
+
+console.log(isEveryValueAString);
+
+
+let numArr = [23 , 5 , 4  , 10 ]
+let total = 0
+for (let index = 0; index < numArr.length; index++) {
+     total = total + numArr[index]
+}
+
+console.log(total);
+
+
+let total2 = numArr.reduce((previous , current , i , arr)=>
+{ return  previous + current }  , 52)
+console.log(total2);
+
+let strings = [ 'i' , 'am' , 'a' , 'boy']
+let finalTexts =  strings.reduce(( a , b )=> { return  a + b +' ' } , '')
+console.log(finalTexts);
+
+
 </script>
