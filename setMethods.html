@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <p  id="num"> 0 </p>
+    <button onclick="increase()"> increase </button>
+
+    <button onclick="changeColor()" id="button" > changeColor </button>
+
+
+    <input type="text" id="myNum">
+<button onclick="countDown()"> count down </button>
+    
+</body>
+</html>
+<script>
+
+    // 1s = 1000ms
+
+function changeColor(params) {
+   let button = document.getElementById('button')
+   button.innerHTML = 'loading...'
+
+   setTimeout(()=> {
+ document.body.style.backgroundColor === 'brown' ?  document.body.style.backgroundColor ='white' : document.body.style.backgroundColor ='brown'
+  button.innerHTML = 'changeColor'
+   }  , 3000)
+
+}
+
+
+
+setInterval(()=> {
+console.log('hi');
+
+} , 2000)
+
+
+
+function increase(params) {
+    let num = document.getElementById('num').innerHTML // 0
+
+ let increaser = setInterval(()=> {
+if (num < 10) {
+        +num++
+    document.getElementById('num').innerHTML = num
+}else {
+    clearInterval(increaser)
+}
+    } , 3000)
+    
+}
+
+
+
+
+function countDown(params) {
+    let theNumElement = document.getElementById('myNum')
+    let numValue = theNumElement.value.trim()
+ 
+if (numValue === '') {
+    alert('input field is mandatory')
+} else if ( isNaN(numValue)){
+   alert('value must be a number')
+}
+else {
+   let countDownInterval = setInterval(()=> {
+
+    if (numValue === 0) {
+        clearInterval(countDownInterval)
+        alert('time uppp!')
+    }else {
+            numValue--
+           theNumElement.value =  numValue
+    }  
+    } , 1000)
+
+}
+
+
+
+
+
+
+   
+    
+}
+</script>

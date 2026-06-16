@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        table ,th ,td ,tr ,tbody , thead {
+            border-collapse: collapse;  
+            border: 1px solid black;
+            padding: 10px;    
+        }
+    </style>
 </head>
 <body>
        <div id="rechargeCard"> 
@@ -33,7 +40,7 @@
            
         </main>
         <div>
-                <h1> pin: <span id="myPin"> </span></h1>
+                <h4> pin: <span id="myPin"> </span></h4>
             </div>
         <button onclick="genAirtime()" class="btn btn-success">Generate Airtime</button>
 
@@ -41,42 +48,47 @@
     </section>
 
     <section>
-        <h2>Load Airtime</h2>
-        <input id="loadInput" type="text">
+        <h4>Load Airtime</h4>
+        <input id="loadInput" type="text" value="*311*pin#">
         <button onclick="loadAirtime()">Load airtime</button>
     </section>
 
      <div>
-                <h1>Balance: <span id="bal"> </span></h1>
+                <h4>Balance: <span id="bal"> </span></h4>
             </div>
 
-
-    <!-- <section>
-        <h2>All Pins</h2>
+    <section>
+        <div> <button onclick="displayCards()"> all cards</button> <button onclick="usedCards()"> used cards</button> <button onclick="unusedCards()"> unused cards</button> </div>
+        <br>
         <table id="table">
             <thead id="thead">
+                <th>s/n</th>
                 <th>Pin</th>
                 <th>Status</th>
                 <th>Provider</th>
                 <th>Amount</th>
             </thead>
             <tbody id="tbody">
+
     
             </tbody>
         </table>
-    </section> -->
+    </section>
 </div>
     
 </body>
 </html>
 <script>
+let cardData = JSON.parse(localStorage.getItem('mayRechargeCards')) || []
 let cardPin = document.getElementById('myPin')
 let cardProvider = document.getElementById('provider')
 let cardAmount = document.getElementById('amount')
 let balSpan = document.getElementById('bal')
+let tbody = document.getElementById('tbody')
+let loadInput = document.getElementById('loadInput')
 let providerValue = ''
 let amountValue = ''
-let balance = 0 
+let balance = JSON.parse(localStorage.getItem('mayRechargeBalance'))  || 0 
 
 balSpan.innerHTML = balance
 
@@ -96,43 +108,146 @@ function genAirtime() {
 
      cardPin.innerHTML = pin
 
+     let card = {
+        pin ,
+        amount: amountValue ,
+        provider: providerValue ,
+        isUsed: false
+     }
+
+     cardData.push(card)
+     localStorage.setItem('mayRechargeCards' , JSON.stringify(cardData))
+     displayCards()
 
 
     }
 
 }
 
+
+
+function displayCards() {
+    tbody.innerHTML = ''
+    cardData.forEach(( card , i , arr)=> {   
+ tbody.innerHTML += ` <tr>  <td>${i + 1}</td> <td> ${card.pin}</td> <td> ${card.isUsed} </td> <td> ${card.provider} </td> <td> ${card.amount} </td> </tr> `
+    })
+    
+}
+
+
+
+
+
+displayCards()
+
+
+
+
+
 function loadAirtime() {
     let inputElement = document.getElementById('loadInput').value
     console.log(inputElement.startsWith('*311*'));
     
 //    correct text = *311*123456789012# 
-// let pattern = /^\*311*d\{12}$#/
+let cardPin = inputElement.slice(5 , 17)
+let foundCard = cardData.find((card, i , arr)=> { return card.pin === cardPin  })
 
-if (!cardPin.innerHTML.trim()) {
-    alert('please generate pin')
-    return
-}
-
-if (!inputElement.startsWith('*311*') || !inputElement.endsWith('#') || inputElement.trim().length !== 18) {
+if(!loadInput.value.trim()){
+    alert('please input a card to load')
+} else if (!inputElement.startsWith('*311*') || !inputElement.endsWith('#') || inputElement.trim().length !== 18) {
     alert('invalid loading format')
-} else if (inputElement !== `*311*${cardPin.innerHTML.trim()}#`) {
+} else if ( !foundCard ) {
      alert('invalid card')
+} else if ( foundCard.isUsed === true ){
+     alert('card has already been used')
 }else {
-    alert (`you have successfully loaded ${providerValue} of ${amountValue} successfully`)
-     balance = balance + Number(amountValue) 
+    alert (`you have successfully loaded ${foundCard.provider} of ${foundCard.amount} successfully`)
+     balance = balance + Number(foundCard.amount) 
+     localStorage.setItem('mayRechargeBalance' , JSON.stringify(balance))
      balSpan.innerHTML = balance    
+     foundCard.isUsed = true
+     localStorage.setItem('mayRechargeCards' , JSON.stringify(cardData))
+     displayCards()
+     
 }
-
     
 }
 
+function usedCards() {
+    let filteredUsedCards = cardData.filter(function (card, i) {
+        return card.isUsed === true
+       })
+       tbody.innerHTML = ''
+    filteredUsedCards.forEach(( card , i , arr)=> {   
+ tbody.innerHTML += ` <tr>  <td>${i + 1}</td> <td> ${card.pin}</td> <td> ${card.isUsed} </td> <td> ${card.provider} </td> <td> ${card.amount} </td> </tr> `
+    })
+}
+function unusedCards() {
+    let filteredUnUsedCards = cardData.filter(function (card, i) {
+        return card.isUsed === false
+       })
+       tbody.innerHTML = ''
+    filteredUnUsedCards.forEach(( card , i , arr)=> {   
+ tbody.innerHTML += ` <tr>  <td>${i + 1}</td> <td> ${card.pin}</td> <td> ${card.isUsed} </td> <td> ${card.provider} </td> <td> ${card.amount} </td> </tr> `
+    })
+}
 
 
   
 
 
+// let cards = [
 
+//     {
+//         pin: '4567890209876',
+//         amount:500
+//     },
+//      {
+//         pin: '435902987222',
+//         amount:500
+//     },
+//      {
+//         pin: '4567890209876',
+//         amount:500
+//     }
+
+
+// ]
+
+
+
+
+
+
+let countries = [
+    'Nigeria', 'Ghana', 'Kenya', 'Egypt', 'South Africa',
+    'Brazil', 'Argentina', 'Mexico', 'Canada', 'United States',
+    'Germany', 'France', 'Italy', 'Spain', 'United Kingdom',
+    'Japan', 'China', 'India', 'Australia', 'South Korea',
+    'Russia', 'Turkey', 'Saudi Arabia', 'Morocco', 'Colombia' 
+]
+
+function sendFirstLetterAndTheirAmount() {
+ let singleLetters = countries.map((c) => c[0])
+ console.log(singleLetters);
+ let eachLetter = new Set(singleLetters)
+ console.log(eachLetter);
+ let finalLetterArr = Array.from(eachLetter)
+ console.log(finalLetterArr);
+ 
+let val = finalLetterArr.map(( c, i)=> {
+        return {
+          letter: finalLetterArr[i] ,
+          count : countries.filter((country)=>  country.startsWith(finalLetterArr[i]) ).length
+        }
+   })
+
+   return val
+    
+}
+
+
+console.log(sendFirstLetterAndTheirAmount());
 
 
 

@@ -19,19 +19,30 @@
 <script>
     let todo = document.getElementById('todo')
     let previewDiv = document.getElementById('preview')
-    let todoDatabase = []
-
+    let todoDatabase =  JSON.parse(localStorage.getItem('mayTodoList')) || []
+ 
     
 function addTodo() {
-   let todoValue =  todo.value.trim()
+  let todoValue =  todo.value.trim()
     if (todoValue === '') {
         alert('please provide a todo')
     }else {
       todoDatabase.push(todoValue)
       todo.value = ''
-      displayTodos()
+    saveToLocaStorageAndDisplayTodo()
     }   
 }
+
+
+function saveToLocaStorageAndDisplayTodo() {
+      localStorage.setItem('mayTodoList' , JSON.stringify(todoDatabase))
+      displayTodos()
+}
+
+
+
+
+displayTodos()
 
 
 function editTodo(i) {
@@ -43,8 +54,9 @@ function editTodo(i) {
        alert('please edit with a different value')
     } else {
      todoDatabase[i] = promptValue.trim()
+     saveToLocaStorageAndDisplayTodo()
     // todoDatabase.splice( i , 1 , promptValue.trim() )
-    displayTodos()
+ 
     } 
 }
 
@@ -61,11 +73,8 @@ function deleteTodo(i) {
     let canDelete = confirm('are you sure')
     if (canDelete) {
     todoDatabase.splice(i, 1)
-    displayTodos()
+    saveToLocaStorageAndDisplayTodo()
     }
-  
-
-    
 }
 
 
