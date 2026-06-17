@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - InkFlow</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    body {
+      background: var(--navy-deep);
+    }
+
+    /* ========== DASHBOARD LAYOUT ========== */
+    .dashboard {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ========== SIDEBAR NAV ========== */
+    .sidebar {
+      width: 260px;
+      background: var(--navy);
+      border-right: 1px solid var(--glass-border);
+      padding: 24px 0;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 100;
+      transition: transform var(--transition-smooth);
+    }
+
+    .sidebar-header {
+      padding: 0 24px;
+      margin-bottom: 32px;
+    }
+
+    .sidebar-header .nav-logo {
+      font-size: 20px;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 0 12px;
+    }
+
+    .sidebar-nav-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--white-50);
+      padding: 16px 16px 8px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--white-70);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      margin-bottom: 2px;
+    }
+
+    .nav-item:hover {
+      background: var(--white-05);
+      color: var(--white);
+    }
+
+    .nav-item.active {
+      background: rgba(31, 187, 176, 0.1);
+      color: var(--teal);
+    }
+
+    .nav-item i {
+      width: 20px;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    .nav-item .badge {
+      margin-left: auto;
+      background: var(--teal);
+      color: var(--navy);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: var(--radius-full);
+    }
+
+    .sidebar-footer {
+      padding: 16px 12px;
+      border-top: 1px solid var(--glass-border);
+      margin-top: auto;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background var(--transition-fast);
+    }
+
+    .user-profile:hover {
+      background: var(--white-05);
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .user-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .user-info .name {
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-info .role {
+      font-size: 11px;
+      color: var(--white-50);
+    }
+
+    /* ========== MAIN CONTENT ========== */
+    .main-content {
+      flex: 1;
+      margin-left: 260px;
+      padding: 0;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 32px;
+      background: rgba(6, 13, 26, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .top-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .top-bar h2 {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--white-05);
+      border: 1px solid var(--white-10);
+      border-radius: var(--radius-full);
+      padding: 8px 16px;
+      min-width: 280px;
+      transition: all var(--transition-fast);
+    }
+
+    .search-box:focus-within {
+      border-color: var(--teal);
+      background: rgba(31, 187, 176, 0.05);
+    }
+
+    .search-box i {
+      color: var(--white-50);
+      font-size: 14px;
+    }
+
+    .search-box input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      width: 100%;
+    }
+
+    .search-box input::placeholder {
+      color: var(--white-50);
+    }
+
+    .top-bar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--white-05);
+      border: 1px solid var(--white-10);
+      color: var(--white-70);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      position: relative;
+      font-size: 15px;
+    }
+
+    .icon-btn:hover {
+      background: var(--white-10);
+      color: var(--white);
+    }
+
+    .icon-btn .notif-dot {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 8px;
+      height: 8px;
+      background: var(--flame);
+      border-radius: 50%;
+      border: 2px solid var(--navy-deep);
+    }
+
+    /* Content Area */
+    .content-area {
+      padding: 28px 32px;
+    }
+
+    /* Stats Row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      transition: all var(--transition-fast);
+    }
+
+    .stat-card:hover {
+      border-color: rgba(31, 187, 176, 0.3);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat-card .stat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .stat-card .stat-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .stat-icon.teal { background: rgba(31, 187, 176, 0.12); color: var(--teal); }
+    .stat-icon.blue { background: rgba(41, 145, 207, 0.12); color: var(--blue); }
+    .stat-icon.yellow { background: rgba(250, 169, 26, 0.12); color: var(--yellow); }
+    .stat-icon.flame { background: rgba(240, 83, 35, 0.12); color: var(--flame); }
+
+    .stat-card .stat-change {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+    }
+
+    .stat-change.up { color: var(--teal); background: rgba(31, 187, 176, 0.1); }
+    .stat-change.down { color: var(--flame); background: rgba(240, 83, 35, 0.1); }
+
+    .stat-card .stat-value {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+
+    .stat-card .stat-label {
+      font-size: 13px;
+      color: var(--white-50);
+    }
+
+    /* Content Grid */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+    }
+
+    .panel {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .panel-header h3 {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .panel-header .panel-action {
+      font-size: 13px;
+      color: var(--teal);
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .panel-header .panel-action:hover {
+      color: var(--blue);
+    }
+
+    /* Posts List */
+    .post-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--white-05);
+      transition: background var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .post-item:last-child {
+      border-bottom: none;
+    }
+
+    .post-item:hover {
+      background: var(--glass-hover);
+    }
+
+    .post-thumb {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, var(--navy-mid), var(--navy-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .post-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .post-info h4 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--white-50);
+    }
+
+    .post-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .post-status {
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .status-published { background: rgba(31, 187, 176, 0.12); color: var(--teal); }
+    .status-draft { background: rgba(250, 169, 26, 0.12); color: var(--yellow); }
+    .status-review { background: rgba(41, 145, 207, 0.12); color: var(--blue); }
+
+    /* Activity Feed */
+    .activity-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--white-05);
+    }
+
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .activity-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .activity-dot.teal { background: var(--teal); }
+    .activity-dot.blue { background: var(--blue); }
+    .activity-dot.yellow { background: var(--yellow); }
+
+    .activity-text {
+      font-size: 13px;
+      color: var(--white-70);
+      line-height: 1.5;
+    }
+
+    .activity-text strong {
+      color: var(--white);
+    }
+
+    .activity-time {
+      font-size: 11px;
+      color: var(--white-50);
+      margin-top: 3px;
+      display: block;
+    }
+
+    /* Trending */
+    .trending-section {
+      margin-top: 20px;
+    }
+
+    .trending-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--white-05);
+      transition: background var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .trending-item:hover {
+      background: var(--glass-hover);
+    }
+
+    .trending-item:last-child {
+      border-bottom: none;
+    }
+
+    .trending-rank {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--white-20);
+      min-width: 28px;
+    }
+
+    .trending-info h5 {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .trending-info p {
+      font-size: 11px;
+      color: var(--white-50);
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 16px 20px;
+    }
+
+    .quick-action-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 14px;
+      background: var(--white-05);
+      border: 1px solid var(--white-10);
+      border-radius: var(--radius-sm);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--white-70);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .quick-action-btn:hover {
+      background: rgba(31, 187, 176, 0.08);
+      border-color: rgba(31, 187, 176, 0.2);
+      color: var(--teal);
+    }
+
+    .quick-action-btn i {
+      font-size: 14px;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 1024px) {
+      .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .search-box {
+        min-width: 200px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .mobile-toggle {
+        display: block;
+      }
+
+      .top-bar {
+        padding: 14px 16px;
+      }
+
+      .search-box {
+        display: none;
+      }
+
+      .content-area {
+        padding: 20px 16px;
+      }
+
+      .stats-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .stat-card .stat-value {
+        font-size: 22px;
+      }
+
+      .quick-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="landing.html" class="nav-logo">
+          <div class="logo-icon">I</div>
+          <span>InkFlow</span>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="sidebar-nav-label">Main</div>
+        <a class="nav-item active" href="#">
+          <i class="fas fa-th-large"></i> Dashboard
+        </a>
+        <a class="nav-item" href="#">
+          <i class="fas fa-pen-fancy"></i> My Posts
+          <span class="badge">5</span>
+        </a>
+        <a class="nav-item" href="#">
+          <i class="fas fa-compass"></i> Explore
+        </a>
+        <a class="nav-item" href="#">
+          <i class="fas fa-bookmark"></i> Bookmarks
+        </a>
+
+        <div class="sidebar-nav-label">Content</div>
+        <a class="nav-item" href="#">
+          <i class="fas fa-plus-circle"></i> New Post
+        </a>
+        <a class="nav-item" href="#">
+          <i class="fas fa-chart-line"></i> Analytics
+        </a>
+        <a class="nav-item" href="#">
+          <i class="fas fa-comments"></i> Comments
+          <span class="badge">3</span>
+        </a>
+
+        <div class="sidebar-nav-label">Account</div>
+        <a class="nav-item" href="#">
+          <i class="fas fa-cog"></i> Settings
+        </a>
+        <a class="nav-item" href="login.html">
+          <i class="fas fa-sign-out-alt"></i> Sign Out
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="user-avatar">WA</div>
+          <div class="user-info">
+            <div class="name">Wisdom Anyadike</div>
+            <div class="role">Author</div>
+          </div>
+          <i class="fas fa-ellipsis-v" style="color: var(--white-50); font-size: 12px;"></i>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <div class="top-bar-left">
+          <button class="mobile-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">
+            <i class="fas fa-bars"></i>
+          </button>
+          <h2>Dashboard</h2>
+        </div>
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search posts, tags, authors...">
+        </div>
+        <div class="top-bar-actions">
+          <button class="icon-btn">
+            <i class="fas fa-bell"></i>
+            <span class="notif-dot"></span>
+          </button>
+          <a href="#" class="btn btn-primary" style="padding: 8px 20px; font-size: 13px;">
+            <i class="fas fa-plus"></i> New Post
+          </a>
+        </div>
+      </div>
+
+      <!-- Content Area -->
+      <div class="content-area">
+        <!-- Stats -->
+        <div class="stats-row">
+          <div class="stat-card animate-fade-up delay-1">
+            <div class="stat-header">
+              <div class="stat-icon teal"><i class="fas fa-eye"></i></div>
+              <span class="stat-change up"><i class="fas fa-arrow-up"></i> 12%</span>
+            </div>
+            <div class="stat-value">24.5K</div>
+            <div class="stat-label">Total Views</div>
+          </div>
+          <div class="stat-card animate-fade-up delay-2">
+            <div class="stat-header">
+              <div class="stat-icon blue"><i class="fas fa-file-alt"></i></div>
+              <span class="stat-change up"><i class="fas fa-arrow-up"></i> 3</span>
+            </div>
+            <div class="stat-value">18</div>
+            <div class="stat-label">Published Posts</div>
+          </div>
+          <div class="stat-card animate-fade-up delay-3">
+            <div class="stat-header">
+              <div class="stat-icon yellow"><i class="fas fa-heart"></i></div>
+              <span class="stat-change up"><i class="fas fa-arrow-up"></i> 8%</span>
+            </div>
+            <div class="stat-value">1.2K</div>
+            <div class="stat-label">Total Likes</div>
+          </div>
+          <div class="stat-card animate-fade-up delay-4">
+            <div class="stat-header">
+              <div class="stat-icon flame"><i class="fas fa-users"></i></div>
+              <span class="stat-change up"><i class="fas fa-arrow-up"></i> 24</span>
+            </div>
+            <div class="stat-value">342</div>
+            <div class="stat-label">Followers</div>
+          </div>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+          <!-- Recent Posts -->
+          <div class="panel animate-fade-up delay-3">
+            <div class="panel-header">
+              <h3>Recent Posts</h3>
+              <a class="panel-action">View All <i class="fas fa-arrow-right" style="font-size: 11px;"></i></a>
+            </div>
+            <div class="post-item">
+              <div class="post-thumb" style="background: linear-gradient(135deg, #1FBBB0, #2991CF);">
+                <i class="fas fa-code" style="color: white;"></i>
+              </div>
+              <div class="post-info">
+                <h4>The Future of Web Development in 2026</h4>
+                <div class="post-meta">
+                  <span><i class="fas fa-eye"></i> 2.4K</span>
+                  <span><i class="fas fa-heart"></i> 89</span>
+                  <span><i class="fas fa-comment"></i> 12</span>
+                </div>
+              </div>
+              <span class="post-status status-published">Published</span>
+            </div>
+            <div class="post-item">
+              <div class="post-thumb" style="background: linear-gradient(135deg, #FAA91A, #F05323);">
+                <i class="fas fa-palette" style="color: white;"></i>
+              </div>
+              <div class="post-info">
+                <h4>Design Systems That Actually Scale</h4>
+                <div class="post-meta">
+                  <span><i class="fas fa-eye"></i> 1.8K</span>
+                  <span><i class="fas fa-heart"></i> 56</span>
+                  <span><i class="fas fa-comment"></i> 7</span>
+                </div>
+              </div>
+              <span class="post-status status-published">Published</span>
+            </div>
+            <div class="post-item">
+              <div class="post-thumb" style="background: linear-gradient(135deg, #1B325E, #2991CF);">
+                <i class="fas fa-brain" style="color: white;"></i>
+              </div>
+              <div class="post-info">
+                <h4>Understanding AI: A Beginner's Perspective</h4>
+                <div class="post-meta">
+                  <span><i class="fas fa-eye"></i> 340</span>
+                  <span><i class="fas fa-heart"></i> 12</span>
+                  <span><i class="fas fa-comment"></i> 3</span>
+                </div>
+              </div>
+              <span class="post-status status-draft">Draft</span>
+            </div>
+            <div class="post-item">
+              <div class="post-thumb" style="background: linear-gradient(135deg, #004a9f, #1FBBB0);">
+                <i class="fas fa-rocket" style="color: white;"></i>
+              </div>
+              <div class="post-info">
+                <h4>Launching My First Startup: Lessons Learned</h4>
+                <div class="post-meta">
+                  <span><i class="fas fa-eye"></i> 890</span>
+                  <span><i class="fas fa-heart"></i> 34</span>
+                  <span><i class="fas fa-comment"></i> 9</span>
+                </div>
+              </div>
+              <span class="post-status status-review">In Review</span>
+            </div>
+            <div class="post-item">
+              <div class="post-thumb" style="background: linear-gradient(135deg, #F05323, #FAA91A);">
+                <i class="fas fa-lightbulb" style="color: white;"></i>
+              </div>
+              <div class="post-info">
+                <h4>10 Productivity Hacks for Remote Workers</h4>
+                <div class="post-meta">
+                  <span><i class="fas fa-eye"></i> 5.1K</span>
+                  <span><i class="fas fa-heart"></i> 201</span>
+                  <span><i class="fas fa-comment"></i> 28</span>
+                </div>
+              </div>
+              <span class="post-status status-published">Published</span>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div>
+            <!-- Quick Actions -->
+            <div class="panel animate-fade-up delay-4" style="margin-bottom: 20px;">
+              <div class="panel-header">
+                <h3>Quick Actions</h3>
+              </div>
+              <div class="quick-actions">
+                <button class="quick-action-btn"><i class="fas fa-pen"></i> Write</button>
+                <button class="quick-action-btn"><i class="fas fa-image"></i> Media</button>
+                <button class="quick-action-btn"><i class="fas fa-tags"></i> Tags</button>
+                <button class="quick-action-btn"><i class="fas fa-share-alt"></i> Share</button>
+              </div>
+            </div>
+
+            <!-- Activity -->
+            <div class="panel animate-fade-up delay-5" style="margin-bottom: 20px;">
+              <div class="panel-header">
+                <h3>Recent Activity</h3>
+                <a class="panel-action">See All</a>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot teal"></div>
+                <div>
+                  <div class="activity-text"><strong>Sarah Chen</strong> liked your post "Design Systems That Scale"</div>
+                  <span class="activity-time">2 minutes ago</span>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot blue"></div>
+                <div>
+                  <div class="activity-text"><strong>Alex Rivera</strong> commented on "Web Development 2026"</div>
+                  <span class="activity-time">15 minutes ago</span>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot yellow"></div>
+                <div>
+                  <div class="activity-text"><strong>3 new followers</strong> joined your audience this week</div>
+                  <span class="activity-time">1 hour ago</span>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot teal"></div>
+                <div>
+                  <div class="activity-text">Your post <strong>"Productivity Hacks"</strong> reached 5K views</div>
+                  <span class="activity-time">3 hours ago</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Trending -->
+            <div class="panel animate-fade-up delay-6">
+              <div class="panel-header">
+                <h3>Trending Now</h3>
+              </div>
+              <div class="trending-item">
+                <div class="trending-rank">01</div>
+                <div class="trending-info">
+                  <h5>The Rise of Edge Computing</h5>
+                  <p>4.2K reads &middot; Technology</p>
+                </div>
+              </div>
+              <div class="trending-item">
+                <div class="trending-rank">02</div>
+                <div class="trending-info">
+                  <h5>Minimalist Living in 2026</h5>
+                  <p>3.8K reads &middot; Lifestyle</p>
+                </div>
+              </div>
+              <div class="trending-item">
+                <div class="trending-rank">03</div>
+                <div class="trending-info">
+                  <h5>Climate Tech Startups to Watch</h5>
+                  <p>3.1K reads &middot; Business</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
