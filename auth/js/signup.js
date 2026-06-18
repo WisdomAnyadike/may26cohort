@@ -30,7 +30,13 @@ function signUp(params) {
     } else if ( passwordValue.length < 8 ){
         alert('password must be at least 8 characters')
     } else {
-       let user = {
+        document.querySelector('.btn-primary').innerHTML = 'Loading...'
+        document.querySelector('.btn-primary').disabled = true
+
+
+
+       setTimeout(() => {
+        let user = {
         fullName :  `${firstNameValue} ${lastNameValue}`  ,
         email : emailValue , 
         password : passwordValue ,
@@ -38,7 +44,11 @@ function signUp(params) {
       userDatabase.push(user)
       localStorage.setItem('mayUsers' , JSON.stringify(userDatabase))
       alert('sign up successful')
+       document.querySelector('.btn-primary').innerHTML = 'Create Account'
+        document.querySelector('.btn-primary').disabled = false
       window.location.href = './login.html'
+        
+       }, 3000);
 
     }
     
@@ -66,21 +76,21 @@ function signUp(params) {
 
 // console.log(value);
 
-let emailValue = 'david@gmail.com'
+// let emailValue = 'david@gmail.com'
 
-let users  = [
-   {
-        fullName :  'david mech'  ,
-        email :  'david@gmail.com', 
-        password : 'davido123' ,
-       }, 
-        {
-        fullName :  'omotosho daniel'  ,
-        email :  'daniel@gmail.com', 
-        password : 'ilovefood' ,
-       }
-]
+// let users  = [
+//    {
+//         fullName :  'david mech'  ,
+//         email :  'david@gmail.com', 
+//         password : 'davido123' ,
+//        }, 
+//         {
+//         fullName :  'omotosho daniel'  ,
+//         email :  'daniel@gmail.com', 
+//         password : 'ilovefood' ,
+//        }
+// ]
 
 
 
-let foundUser =  users.find(( user , i )=> { return user.email === emailValue })
+// let foundUser =  users.find(( user , i )=> { return user.email === emailValue })

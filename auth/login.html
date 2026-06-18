@@ -252,7 +252,7 @@
             <a href="#" class="forgot-link">Forgot password?</a>
           </div>
 
-          <button type="submit" class="btn btn-primary">Sign In</button>
+          <button type="button" class="btn btn-primary" onclick="signIn()"> Sign In</button>
 
           <div class="divider">
             <span>or</span>
@@ -292,36 +292,6 @@
     </div>
   </div>
 
-  <script>
-    const form = document.getElementById('loginForm');
-
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      let valid = true;
-
-      document.querySelectorAll('.form-error').forEach(el => el.style.display = 'none');
-
-      const email = document.getElementById('email');
-      const password = document.getElementById('password');
-
-      if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
-        email.parentElement.querySelector('.form-error').style.display = 'flex';
-        valid = false;
-      }
-      if (!password.value.trim()) {
-        password.parentElement.querySelector('.form-error').style.display = 'flex';
-        valid = false;
-      }
-
-      if (valid) {
-        const btn = form.querySelector('.btn-primary');
-        btn.textContent = 'Signing In...';
-        btn.disabled = true;
-        setTimeout(() => {
-          window.location.href = 'dashboard.html';
-        }, 1200);
-      }
-    });
-  </script>
 </body>
 </html>
+<script src="./js/login.js"></script>
