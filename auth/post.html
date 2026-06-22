@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Post - InkFlow</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    body {
+      background: var(--navy-deep);
+    }
+
+    .page-wrapper {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+    }
+
+    /* Top Nav */
+    .top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(6, 13, 26, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .top-nav-left {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .top-nav h2 {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--white-50);
+      transition: color var(--transition-fast);
+    }
+
+    .back-link:hover {
+      color: var(--teal);
+    }
+
+    .page-content {
+      max-width: 760px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+
+    /* Form Card */
+    .form-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .form-card-header {
+      margin-bottom: 28px;
+    }
+
+    .form-card-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .form-card-header p {
+      font-size: 14px;
+      color: var(--white-50);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 130px;
+      line-height: 1.7;
+    }
+
+    /* File Upload */
+    .file-upload-zone {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed rgba(31, 187, 176, 0.3);
+      border-radius: var(--radius-md);
+      padding: 36px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      background: rgba(31, 187, 176, 0.03);
+      margin-bottom: 22px;
+    }
+
+    .file-upload-zone:hover {
+      border-color: var(--teal);
+      background: rgba(31, 187, 176, 0.06);
+    }
+
+    .file-upload-zone input[type="file"] {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .upload-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      background: rgba(31, 187, 176, 0.12);
+      color: var(--teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 14px;
+    }
+
+    .upload-text {
+      font-size: 14px;
+      color: var(--white-50);
+    }
+
+    .upload-text span {
+      color: var(--teal);
+      font-weight: 600;
+    }
+
+    .file-name-display {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--teal);
+      font-weight: 600;
+    }
+
+    .image-preview {
+      margin-bottom: 22px;
+      display: none;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+    }
+
+    .image-preview img {
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white-70);
+      margin-bottom: 10px;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-publish {
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    /* Posts Section */
+    .posts-section {
+      margin-top: 48px;
+      padding-bottom: 60px;
+      animation: fadeInUp 0.8s ease forwards;
+      animation-delay: 0.2s;
+      opacity: 0;
+    }
+
+    .posts-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--white-10);
+    }
+
+    .posts-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .post-count {
+      font-size: 13px;
+      color: var(--white-50);
+    }
+
+    .no-posts {
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--white-50);
+      font-size: 15px;
+    }
+
+    .no-posts i {
+      font-size: 40px;
+      color: var(--white-20);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    /* Blog Card */
+    .blog-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 24px;
+      transition: all var(--transition-smooth);
+    }
+
+    .blog-card:hover {
+      border-color: rgba(31, 187, 176, 0.3);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md), var(--shadow-glow-teal);
+    }
+
+    .blog-card-image {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .blog-card-body {
+      padding: 28px;
+    }
+
+    .blog-card-date {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--white-50);
+      margin-bottom: 10px;
+    }
+
+    .blog-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 14px;
+      transition: color var(--transition-fast);
+    }
+
+    .blog-card:hover .blog-card-title {
+      color: var(--teal);
+    }
+
+    .blog-card-description {
+      font-size: 15px;
+      color: var(--white-50);
+      line-height: 1.75;
+    }
+
+    .blog-card-footer {
+      padding: 16px 28px;
+      border-top: 1px solid var(--white-05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .blog-card-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .author-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .author-name {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .btn-delete {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: 1px solid rgba(240, 83, 35, 0.3);
+      color: var(--flame);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .btn-delete:hover {
+      background: rgba(240, 83, 35, 0.12);
+      border-color: var(--flame);
+    }
+
+    .card-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-like {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: 1px solid var(--white-20);
+      color: var(--white-50);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .btn-like:hover {
+      border-color: var(--flame);
+      color: var(--flame);
+    }
+
+    .btn-like.liked {
+      border-color: var(--flame);
+      color: var(--flame);
+      background: rgba(240, 83, 35, 0.12);
+      box-shadow: 0 0 14px rgba(240, 83, 35, 0.3), 0 0 30px rgba(240, 83, 35, 0.15);
+    }
+
+    .btn-like.liked i {
+      animation: likePopIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes likePopIn {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.4); }
+      100% { transform: scale(1); }
+    }
+
+    @media (max-width: 768px) {
+      .top-nav {
+        padding: 14px 16px;
+      }
+
+      .page-content {
+        margin: 24px auto;
+        padding: 0 16px;
+      }
+
+      .form-card {
+        padding: 24px;
+      }
+
+      .blog-card-image {
+        height: 180px;
+      }
+
+      .blog-card-body {
+        padding: 20px;
+      }
+
+      .blog-card-footer {
+        padding: 14px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-mesh"></div>
+
+  <div class="page-wrapper">
+    <!-- Top Nav -->
+    <div class="top-nav">
+      <div class="top-nav-left">
+        <a href="landing.html" class="nav-logo">
+          <div class="logo-icon">I</div>
+          <span>InkFlow</span>
+        </a>
+      </div>
+      <a href="dashboard.html" class="back-link">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+      </a>
+    </div>
+
+    <!-- Content -->
+    <div class="page-content">
+      <!-- Create Post Form -->
+      <div class="form-card">
+        <div class="form-card-header">
+          <h2>Create a New Post</h2>
+          <p>Share your thoughts with the InkFlow community</p>
+        </div>
+
+        <form id="blogForm" >
+          <div class="form-group">
+            <input type="text" id="blogTitle" placeholder=" " required>
+            <label for="blogTitle">Blog Title</label>
+          </div>
+
+          <div class="form-group">
+            <textarea id="blogDescription" placeholder=" " required></textarea>
+            <label for="blogDescription">Blog Description</label>
+          </div>
+
+          <div>
+            <span class="form-label"><i class="fas fa-image" style="margin-right: 6px;"></i>Blog Image</span>
+            <div class="file-upload-zone" id="dropZone">
+              <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+              <p class="upload-text"><span>Click to upload</span> or drag and drop</p>
+              <p class="file-name-display" id="fileName"></p>
+              <input type="file" id="blogImage" onchange="pickImage()" accept="image/*" required>
+            </div>
+          </div>
+
+          <div class="image-preview" id="imagePreview">
+            <img id="previewImg" src="" alt="Preview">
+          </div>
+
+          <button type="button" onclick="submitPost()" class="btn btn-primary btn-publish" >
+            <i class="fas fa-paper-plane"></i> Publish Post
+          </button>
+        </form>
+      </div>
+
+      <!-- Posts -->
+      <div class="posts-section">
+        <div class="posts-header">
+          <h2>Your Posts</h2>
+          <span class="post-count" id="postCount"></span>
+        </div>
+        <div id="postsContainer">
+          <!-- <div class="no-posts">
+            <i class="fas fa-feather-alt"></i>
+            <p>No posts yet. Create your first blog post above!</p>
+          </div> -->
+
+          <!-- Example 1: Liked blog -->
+          <!-- <div class="blog-card">
+            <img class="blog-card-image" src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80" alt="The Art of Writing">
+            <div class="blog-card-body">
+              <div class="blog-card-date">
+                <i class="fas fa-calendar-alt"></i> June 22, 2026
+              </div>
+              <h3 class="blog-card-title">The Art of Writing in the Digital Age</h3>
+              <p class="blog-card-description">In a world overflowing with content, the ability to write clearly and compellingly has never been more valuable. This post explores how modern writers can stand out by embracing authenticity, mastering storytelling fundamentals, and using digital tools to amplify their voice without losing their unique perspective.</p>
+            </div>
+            <div class="blog-card-footer">
+              <div class="blog-card-author">
+                <div class="author-avatar">WA</div>
+                <span class="author-name">Wisdom Anyadike</span>
+              </div>
+              <div class="card-actions">
+                <button class="btn-like liked">
+                  <i class="fas fa-heart"></i> Liked
+                </button>
+                <button class="btn-delete">
+                  <i class="fas fa-trash-alt"></i> Delete
+                </button>
+              </div>
+            </div>
+          </div> -->
+
+          <!-- Example 2: Unliked blog -->
+          <!-- <div class="blog-card">
+            <img class="blog-card-image" src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80" alt="Tech and Innovation">
+            <div class="blog-card-body">
+              <div class="blog-card-date">
+                <i class="fas fa-calendar-alt"></i> June 20, 2026
+              </div>
+              <h3 class="blog-card-title">Why Every Developer Should Learn to Write</h3>
+              <p class="blog-card-description">Communication is the most underrated skill in tech. Whether it's documenting your code, writing a compelling README, or crafting a blog post that explains a complex concept — strong writing makes you a better engineer and opens doors you didn't know existed.</p>
+            </div>
+            <div class="blog-card-footer">
+              <div class="blog-card-author">
+                <div class="author-avatar">WA</div>
+                <span class="author-name">Wisdom Anyadike</span>
+              </div>
+              <div class="card-actions">
+                <button class="btn-like">
+                  <i class="far fa-heart"></i> Like
+                </button>
+                <button class="btn-delete">
+                  <i class="fas fa-trash-alt"></i> Delete
+                </button>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+<script src="./js/posts.js"></script>

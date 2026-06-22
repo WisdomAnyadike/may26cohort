@@ -40,6 +40,8 @@ function signUp(params) {
         fullName :  `${firstNameValue} ${lastNameValue}`  ,
         email : emailValue , 
         password : passwordValue ,
+        blogPosts : [] , 
+        profilePicture: null
        }
       userDatabase.push(user)
       localStorage.setItem('mayUsers' , JSON.stringify(userDatabase))
