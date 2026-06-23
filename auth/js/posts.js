@@ -16,8 +16,6 @@ function checkUserAuth(params) {
 }
 
 checkUserAuth()
-
-
 let userBlogPosts = user.blogPosts 
 
 
@@ -29,12 +27,18 @@ function submitPost() {
     if (!blogTitleValue || !blogImageValue || !blogDescriptionValue) {
         alert('all fields are mandatory')
     } else {
+      
+      let blog = {
+        title: blogTitleValue ,
+        description : blogDescriptionValue ,
+        image : blogImageValue , 
+        isLiked : false 
+      }
 
-
-        
-    }
-
-    
+      userBlogPosts.push(blog)
+     localStorage.setItem('mayUsers' , JSON.stringify(allUsers))
+      displayBlogs()   
+    } 
 }
 
 
@@ -46,14 +50,43 @@ function displayBlogs(params) {
             <p>No posts yet. Create your first blog post above!</p>
           </div>` 
         } else {
+           postsContainer.innerHTML =  ''
+          for (let index = 0; index < userBlogPosts.length; index++) {
 
-
+       
+            postsContainer.innerHTML += `  <div class="blog-card">
+            <img class="blog-card-image" src="${userBlogPosts[index].image}" alt="The Art of Writing">
+            <div class="blog-card-body">
+              <div class="blog-card-date">
+                <i class="fas fa-calendar-alt"></i> June 22, 2026
+              </div>
+              <h3 class="blog-card-title"> ${userBlogPosts[index].title}</h3>
+              <p class="blog-card-description">${userBlogPosts[index].description}</p>
+            </div>
+            <div class="blog-card-footer">
+              <div class="blog-card-author">
+                <div class="author-avatar">WA</div>
+                <span class="author-name">Wisdom Anyadike</span>
+              </div>
+              <div class="card-actions">
+                <button class="btn-like ${userBlogPosts[index].isLiked ? 'liked' : ''}">
+                  <i class="fas fa-heart"></i> Liked
+                </button>
+                <button class="btn-delete">
+                  <i class="fas fa-trash-alt"></i> Delete
+                </button>
+              </div>
+            </div>
+          </div> `
+       }
             
-        }
-    
+        } 
 }
 
+
+
 displayBlogs()
+
 
 function pickImage() {
     let file = blogImageInput.files[0]
@@ -66,17 +99,10 @@ function pickImage() {
 
    let reader = new FileReader() 
     reader.readAsDataURL(file)
-
   reader.addEventListener('load' , (e)=> {
-
    previewImg.src = e.target.result
    previewImg.width = '100'
     previewImg.height = '100'
     imagePreview.style.display = "block"
-  })
-   
-
-   
-    
-    
+  })    
 }

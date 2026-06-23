@@ -6,7 +6,7 @@ let button = document.querySelector('.btn-primary')
 
 function signIn() {
     
-    let foundUser = allUsers.find((user, i)=> user.email === inputedEmail.value.trim()) 
+    let foundUser = allUsers.find((u, i)=> u.email === inputedEmail.value.trim()) 
 
     if(inputedEmail.value.trim() === "" || inputedPassword.value.trim() === "") {
         alert("All fields are mandatory")

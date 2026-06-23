@@ -1,6 +1,6 @@
-let allUsers = JSON.parse(localStorage.getItem('mayUsers'))
-let currentUserIndex = localStorage.getItem('currentUserIndex')
-let user = allUsers[currentUserIndex]
+let allUsers = JSON.parse(localStorage.getItem('mayUsers')) // [ {} , {} , {} , {} , {}]
+let currentUserIndex = localStorage.getItem('currentUserIndex') // 4
+let user = allUsers[currentUserIndex] // allUsers[4]
 console.log(user);
 
 
