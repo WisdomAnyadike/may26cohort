@@ -32,8 +32,7 @@ function signUp(params) {
     } else {
         document.querySelector('.btn-primary').innerHTML = 'Loading...'
         document.querySelector('.btn-primary').disabled = true
-
-
+      
 
        setTimeout(() => {
         let user = {
@@ -46,11 +45,14 @@ function signUp(params) {
       userDatabase.push(user)
       localStorage.setItem('mayUsers' , JSON.stringify(userDatabase))
       alert('sign up successful')
-       document.querySelector('.btn-primary').innerHTML = 'Create Account'
+      document.querySelector('.btn-primary').innerHTML = 'Create Account'
         document.querySelector('.btn-primary').disabled = false
+      
       window.location.href = './login.html'
-        
        }, 3000);
+
+   
+       
 
     }
     

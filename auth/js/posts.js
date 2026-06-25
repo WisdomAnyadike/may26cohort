@@ -8,6 +8,9 @@ let previewImg = document.getElementById('previewImg')
 console.log(user);
 
 
+
+
+
 function checkUserAuth(params) {
     if (!user) {
         alert('unauthorized')
@@ -24,17 +27,31 @@ function submitPost() {
     let blogTitleValue = blogTitleInput.value.trim()
     let blogDescriptionValue = blogDescriptionInput.value.trim()
     let blogImageValue = previewImg.src
+    let allBlogs =  [] 
+    
+    allUsers.forEach((user)=>  {
+        user.blogPosts.forEach((blog)=> {
+          allBlogs.push(blog)
+        })  
+    }  )
+
     if (!blogTitleValue || !blogImageValue || !blogDescriptionValue) {
         alert('all fields are mandatory')
-    } else {
+    } 
+     else if ( allBlogs.find(( blog)=> blog.title === blogTitleValue.toLowerCase() )){
+       alert('Blog already exists')
+     }
+    
+    
+    else {
       
       let blog = {
-        title: blogTitleValue ,
-        description : blogDescriptionValue ,
+        title: blogTitleValue.toLowerCase() ,
+        description : blogDescriptionValue.toLowerCase() ,
         image : blogImageValue , 
         isLiked : false 
       }
-
+    
       userBlogPosts.push(blog)
      localStorage.setItem('mayUsers' , JSON.stringify(allUsers))
       displayBlogs()   
@@ -52,8 +69,8 @@ function displayBlogs(params) {
         } else {
            postsContainer.innerHTML =  ''
           for (let index = 0; index < userBlogPosts.length; index++) {
+          
 
-       
             postsContainer.innerHTML += `  <div class="blog-card">
             <img class="blog-card-image" src="${userBlogPosts[index].image}" alt="The Art of Writing">
             <div class="blog-card-body">
@@ -69,10 +86,10 @@ function displayBlogs(params) {
                 <span class="author-name">Wisdom Anyadike</span>
               </div>
               <div class="card-actions">
-                <button class="btn-like ${userBlogPosts[index].isLiked ? 'liked' : ''}">
+                <button onclick="likePost(${index})" class="btn-like ${userBlogPosts[index].isLiked ?  'liked' : ''}">
                   <i class="fas fa-heart"></i> Liked
                 </button>
-                <button class="btn-delete">
+                <button class="btn-delete" onclick="deleteBlog(${index})">
                   <i class="fas fa-trash-alt"></i> Delete
                 </button>
               </div>
@@ -105,4 +122,25 @@ function pickImage() {
     previewImg.height = '100'
     imagePreview.style.display = "block"
   })    
+}
+
+
+function deleteBlog(i) {
+ userBlogPosts.splice(i , 1)
+   localStorage.setItem('mayUsers' , JSON.stringify(allUsers))
+      displayBlogs()   
+  
+}
+
+
+function likePost(i) {
+  if (userBlogPosts[i].isLiked ) {
+    userBlogPosts[i].isLiked = false
+  }else {
+    userBlogPosts[i].isLiked = true
+  }
+
+  // userBlogPosts[i].isLiked = !userBlogPosts[i].isLiked
+     localStorage.setItem('mayUsers' , JSON.stringify(allUsers))
+      displayBlogs()   
 }
