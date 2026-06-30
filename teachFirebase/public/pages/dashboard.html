@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClassChat - Dashboard</title>
+  <link rel="stylesheet" href="../css/landing.css">
+</head>
+<body>
+
+  <div class="dashboard">
+
+    <!-- HEADER -->
+    <div class="dashboard-header">
+      <div>
+        <h2>ClassChat</h2>
+        <p class="welcome-text">Welcome, <span id="user-name">Student</span></p>
+      </div>
+      <button class="logout-btn" id="logout-btn">Log Out</button>
+    </div>
+
+    <!-- CHAT -->
+    <div class="chat-container">
+      <p class="chat-room-title">Class Group Chat</p>
+
+      <div class="chat-messages" id="chat-messages">
+
+        <div class="message received">
+          <div class="sender">Adaeze</div>
+          Hey everyone! Has anyone started the Firebase assignment yet?
+          <div class="time">10:30 AM</div>
+        </div>
+
+        <div class="message sent">
+          <div class="sender">You</div>
+          Yes I just finished setting up the Realtime Database. It's actually pretty straightforward!
+          <div class="time">10:32 AM</div>
+        </div>
+
+      </div>
+
+      <div class="chat-input-area">
+        <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off">
+        <button class="send-btn" id="send-btn">Send</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ADD YOUR FIREBASE + JS SCRIPTS HERE -->
+
+</body>
+</html>
